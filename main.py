@@ -4,10 +4,20 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 
 from Db_connect import insert_resource
+from group_parse import group_parse
+from Db_connect import url_db
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
 
+
+
 # This example requires Selenium WebDriver 3.13 or newer
-source_url = "https://www.facebook.com/people/Абай-Молдабеков/100011366594475/"
+url_db(0)
+source_url = url_db
+
+if source_url.find("/group") != -1:
+    result = group_parse(source_url)
+    print(result)
+
 with webdriver.Chrome() as driver:
     wait = WebDriverWait(driver, 10)
     driver.get(source_url)
@@ -22,5 +32,6 @@ with webdriver.Chrome() as driver:
     print(full_name)
     number_of_subscribers = content[20]
     print(number_of_subscribers)
+
 
 insert_resource(source_url, number_of_subscribers, full_name)

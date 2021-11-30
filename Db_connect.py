@@ -46,3 +46,10 @@ def insert_resource(source_url, number_of_subscribers, full_name):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
+
+def url_db(n):
+    cursor = connection.cursor()
+    cursor.execute("SELECT source_url FROM resource")
+    resource_url = cursor.fetchall()[n]
+    print(resource_url)
+    return resource_url

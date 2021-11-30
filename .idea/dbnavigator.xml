@@ -36,7 +36,9 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" object-ref="consoles/facebookScript" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" />

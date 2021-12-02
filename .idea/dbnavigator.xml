@@ -24,7 +24,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33">
+        <schema name="facebookscript" object-types="table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33">
@@ -35,7 +39,9 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" object-ref="consoles/facebookScript" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" />

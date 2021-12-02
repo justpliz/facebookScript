@@ -35,6 +35,5 @@ def group_parse(source_url):
         else:
             number_of_subscribers = float(number_of_subscribers)
             print(number_of_subscribers)
-    groups_content = []
-    # groups_content.append()
+    groups_content = [full_name, number_of_subscribers]
     return groups_content

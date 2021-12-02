@@ -4,14 +4,16 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 
-from Db_connect import insert_resource
-from Db_connect import resource_url
+# from Db_connect import insert_resource
+from Db_connect import get_source_url
+from Db_connect import update_resource
 
 start_time = time.time()
 # This example requires Selenium WebDriver 3.13 or newer
-source_url = resource_url(8)
+source_id = 1
+source_url = get_source_url(source_id)
 
-def test_parse(number_of_subscribers):
+def group_parse(number_of_subscribers):
     subscribers = number_of_subscribers.replace('Участники: ', '')
     print(subscribers)
     number_of_subscribers = subscribers.replace('Участники: ', '')
@@ -48,8 +50,11 @@ with webdriver.Chrome() as driver:
     # print(content)
 
     if source_url.find("/group") != -1:
-        number_of_subscribers = test_parse(number_of_subscribers)
+        number_of_subscribers = group_parse(number_of_subscribers)
 
-insert_resource(source_url, number_of_subscribers, full_name)
+item_content = (source_id, source_url, number_of_subscribers, full_name, "test_user_id", "Facebook", "1000-01-02")
+
+update_resource(item_content)
+#insert_resource(CONTENT)
 
 print("--- %s seconds ---" % (time.time() - start_time))

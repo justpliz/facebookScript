@@ -52,13 +52,22 @@ with webdriver.Chrome() as driver:
     print(full_name)
     number_of_subscribers = content[20]
     print(number_of_subscribers)
-    # print(content)
 
-    if source_url.find("/group") != -1:
+    if source_url.find("id=") != -1:
+        user_id = source_url.split("id=", 1)[1]
+    elif source_url.find("groups") != -1:
+        user_id = source_url.partition('groups/')[-1].rpartition('/')[0]
         number_of_subscribers = group_parse(number_of_subscribers)
+    elif source_url.find(".com/") != -1:
+        user_id = source_url.split(".com/", 1)[1]
+    else:
+        user_id = "incorrect url"
+
+    # if source_url.find("/group") != -1:
+    #     number_of_subscribers = group_parse(number_of_subscribers)
 
 
-update_content = (source_url, number_of_subscribers, full_name, 23, source_id)
+update_content = (source_url, number_of_subscribers, full_name, user_id, source_id)
 update_resource(update_content)
 
 

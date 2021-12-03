@@ -2,25 +2,20 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from datetime import datetime
 import time
-import mysql.connector
 
-# from Db_connect import insert_resource
 from Db_connect import create_resource_table
 from Db_connect import get_source_url
 from Db_connect import insert_resource
 from Db_connect import update_resource
+from Db_connect import close_connect
 
 start_time = time.time()
 # This example requires Selenium WebDriver 3.13 or newer
 
-CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
-connection = mysql.connector.connect(**CONNECTION)
-cursor = connection.cursor()
-create_resource_table(cursor)
-source_id = 1
-source_url = get_source_url(cursor, source_id)
+create_resource_table() # создание таблицы resource
+source_id = 4 #перебор
+source_url = get_source_url(source_id)
 
 def group_parse(number_of_subscribers):
     subscribers = number_of_subscribers.replace('Участники: ', '')
@@ -44,6 +39,7 @@ def group_parse(number_of_subscribers):
         print(number_of_subscribers)
     return number_of_subscribers
 
+
 with webdriver.Chrome() as driver:
     wait = WebDriverWait(driver, 10)
     driver.get(source_url)
@@ -56,25 +52,19 @@ with webdriver.Chrome() as driver:
     print(full_name)
     number_of_subscribers = content[20]
     print(number_of_subscribers)
-    update_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     # print(content)
 
     if source_url.find("/group") != -1:
         number_of_subscribers = group_parse(number_of_subscribers)
 
 
-
-update_content = (source_id, source_url, number_of_subscribers, full_name, "test_user_id", "Facebook", update_date)
-update_resource(cursor, update_content)
-
-insert_content = ('https://www.facebook.com/brigittelindholm.me', '1', 'Абай Молдабеков1', '', 'Facebook', update_date)
-insert_resource(cursor, insert_content)
+update_content = (source_id, source_url, number_of_subscribers, full_name, 23)
+update_resource(update_content)
 
 
-if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("MySQL connection is closed")
+insert_content = ('https://www.facebook.com/brigittelindholm.me', '1', 'Абай Молдабеков2', '', 'Facebook', '1000-01-01')
+#insert_resource(insert_content)
 
 
+close_connect()
 print("--- %s seconds ---" % (time.time() - start_time))

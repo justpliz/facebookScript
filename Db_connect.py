@@ -1,11 +1,12 @@
 import mysql.connector
 from mysql.connector import Error
 
+
 CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
 connection = mysql.connector.connect(**CONNECTION)
+cursor = connection.cursor()
 
-
-def create_resource_table(cursor):
+def create_resource_table():
     try:
         mySql_create_table_query = """CREATE TABLE resource (
                                      source_id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -14,7 +15,7 @@ def create_resource_table(cursor):
                                      full_name varchar(255) NOT NULL,
                                      user_id varchar(255) NOT NULL,
                                      type varchar(255) NOT NULL,
-                                     update_date date NOT NULL,
+                                     update_date datetime NOT NULL,
                                      PRIMARY KEY (source_id)) """
         result = cursor.execute(mySql_create_table_query) #delete
         print("resource Table created successfully")
@@ -22,43 +23,51 @@ def create_resource_table(cursor):
     except mysql.connector.Error as error:
         print("Failed to create table in MySQL: {}".format(error))
 
-def insert_resource(cursor, insert_content):
+def insert_resource(insert_content):
     try:
         mySql_insert_resources = """INSERT INTO resource (source_url, number_of_subscribers, full_name, 
         user_id, type, update_date)
                                VALUES (%s, %s, %s, %s, %s, %s) """
-        cursor.execute(mySql_insert_resources, insert_content)
+        record = insert_content
+        connection.cursor()
+        cursor.execute(mySql_insert_resources, record)
         connection.commit()
         print("Record inserted successfully into resource table")
 
     except mysql.connector.Error as error:
         print("Failed to insert into MySQL table {}".format(error))
 
-def update_resource(cursor, update_content):
+def update_resource(update_content):
     try:
+        #connection.cursor()
         mySql_update_resources = """Update resource set source_id = %s, source_url = %s, number_of_subscribers = %s, 
-        full_name = %s, user_id = %s, type = %s, update_date = %s where 
-        source_id = 1"""
+        full_name = %s, user_id = %s where source_id = 4"""
 
         source_id = update_content[0]
+        print(source_id)
         source_url = update_content[1]
+        print(source_url)
         number_of_subscribers = update_content[2]
+        print(number_of_subscribers)
         full_name = update_content[3]
+        print(full_name)
         user_id = update_content[4]
-        type = update_content [5]
-        update_date = update_content [6]
-
-        cursor.execute(mySql_update_resources, update_content)
+        print(user_id)
+        input = update_content
+        cursor.execute(mySql_update_resources, input)
         connection.commit()
         print("Record updated successfully into resource table")
-        #record = cursor.fetchone()
-        #print(record)
 
     except mysql.connector.Error as error:
         print("Failed to update table record: {}".format(error))
 
-def get_source_url(cursor, source_url):
+def get_source_url(source_url):
     cursor.execute("SELECT source_url FROM resource")
     url = cursor.fetchall()[source_url - 1]
     resource_url = ''.join(map(str, url))
     return resource_url
+
+def close_connect():
+    cursor.close()
+    connection.close()
+    print("MySQL connection is closed")

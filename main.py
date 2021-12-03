@@ -14,7 +14,7 @@ start_time = time.time()
 # This example requires Selenium WebDriver 3.13 or newer
 
 create_resource_table() # создание таблицы resource
-source_id = 4 #перебор
+source_id = 6 #перебор
 source_url = get_source_url(source_id)
 
 def group_parse(number_of_subscribers):
@@ -58,7 +58,7 @@ with webdriver.Chrome() as driver:
         number_of_subscribers = group_parse(number_of_subscribers)
 
 
-update_content = (source_id, source_url, number_of_subscribers, full_name, 23)
+update_content = (source_url, number_of_subscribers, full_name, 23, source_id)
 update_resource(update_content)
 
 

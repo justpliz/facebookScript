@@ -39,22 +39,16 @@ def insert_resource(insert_content):
 
 def update_resource(update_content):
     try:
-        #connection.cursor()
-        mySql_update_resources = """Update resource set source_id = %s, source_url = %s, number_of_subscribers = %s, 
-        full_name = %s, user_id = %s where source_id = 4"""
+        mySql_update_resources = """Update resource set source_url = %s, number_of_subscribers = %s, 
+        full_name = %s, user_id = %s where source_id = %s"""
 
-        source_id = update_content[0]
-        print(source_id)
-        source_url = update_content[1]
-        print(source_url)
-        number_of_subscribers = update_content[2]
-        print(number_of_subscribers)
-        full_name = update_content[3]
-        print(full_name)
-        user_id = update_content[4]
-        print(user_id)
-        input = update_content
-        cursor.execute(mySql_update_resources, input)
+        source_url = update_content[0]
+        number_of_subscribers = update_content[1]
+        full_name = update_content[2]
+        user_id = update_content[3]
+        source_id = update_content[4]
+
+        cursor.execute(mySql_update_resources, update_content)
         connection.commit()
         print("Record updated successfully into resource table")
 

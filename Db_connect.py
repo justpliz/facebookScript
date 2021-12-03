@@ -17,11 +17,30 @@ def create_resource_table():
                                      type varchar(255) NOT NULL,
                                      update_date datetime NOT NULL,
                                      PRIMARY KEY (source_id)) """
-        result = cursor.execute(mySql_create_table_query) #delete
+        cursor.execute(mySql_create_table_query)
         print("resource Table created successfully")
 
     except mysql.connector.Error as error:
         print("Failed to create table in MySQL: {}".format(error))
+
+def sorted_table():
+    try:
+        mySql_sorted_table = "SELECT * FROM resource WHERE type = 'Facebook' ORDER BY update_date"
+        cursor.execute(mySql_sorted_table)
+        cursor.fetchall()
+        connection.commit()
+
+        mySql_count_query = "SELECT COUNT(*) FROM resource WHERE type = 'Facebook'"
+        cursor.execute(mySql_count_query)
+        count = ''.join(map(str, cursor.fetchall()[0]))
+        count = int(count)
+        connection.commit()
+        print("resource table successfully sorted by parameter update_date")
+
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+
+    return count
 
 def insert_resource(insert_content):
     try:
@@ -55,11 +74,16 @@ def update_resource(update_content):
     except mysql.connector.Error as error:
         print("Failed to update table record: {}".format(error))
 
-def get_source_url(source_url):
+def get_content_from_db(count):
+    cursor.execute("SELECT source_id FROM resource")
+    source_id = cursor.fetchall()[count - 1]
+    print(source_id)
     cursor.execute("SELECT source_url FROM resource")
-    url = cursor.fetchall()[source_url - 1]
-    resource_url = ''.join(map(str, url))
-    return resource_url
+    source_url = cursor.fetchall()[count - 1]
+    source_url = ''.join(map(str, source_url))
+    print(source_url)
+    resource = (source_id, source_url)
+    return resource
 
 def close_connect():
     cursor.close()

@@ -27,7 +27,7 @@ def insert_resource(insert_content):
     try:
         mySql_insert_resources = """INSERT INTO resource (source_url, number_of_subscribers, full_name, 
         user_id, type, update_date)
-                               VALUES (%s, %s, %s, %s, %s, %s) """
+                               VALUES (%s, %s, %s, %s, %s, NOW()) """
         record = insert_content
         connection.cursor()
         cursor.execute(mySql_insert_resources, record)
@@ -40,7 +40,7 @@ def insert_resource(insert_content):
 def update_resource(update_content):
     try:
         mySql_update_resources = """Update resource set source_url = %s, number_of_subscribers = %s, 
-        full_name = %s, user_id = %s where source_id = %s"""
+        full_name = %s, user_id = %s, update_date = NOW() where source_id = %s"""
 
         source_url = update_content[0]
         number_of_subscribers = update_content[1]

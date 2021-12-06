@@ -25,22 +25,16 @@ def create_resource_table():
 
 def sorted_table():
     try:
-        mySql_sorted_table = "SELECT * FROM resource WHERE type = 'Facebook' ORDER BY update_date"
+        mySql_sorted_table = "SELECT source_id FROM resource WHERE type = 'Facebook' ORDER BY update_date"
         cursor.execute(mySql_sorted_table)
-        cursor.fetchall()
+        sorted_source_id = cursor.fetchall()
+        sorted_source_id = list(sum(sorted_source_id, ()))
         connection.commit()
-
-        mySql_count_query = "SELECT COUNT(*) FROM resource WHERE type = 'Facebook'"
-        cursor.execute(mySql_count_query)
-        count = ''.join(map(str, cursor.fetchall()[0]))
-        count = int(count)
-        connection.commit()
-        print("resource table successfully sorted by parameter update_date")
 
     except mysql.connector.Error as error:
         print("Failed to insert into MySQL table {}".format(error))
 
-    return count
+    return sorted_source_id
 
 def insert_resource(insert_content):
     try:
@@ -78,11 +72,9 @@ def get_content_from_db(count):
     cursor.execute("SELECT source_id FROM resource")
     source_id = cursor.fetchall()[count - 1]
     source_id = ''.join(map(str, source_id))
-    #print(source_id)
     cursor.execute("SELECT source_url FROM resource")
     source_url = cursor.fetchall()[count - 1]
     source_url = ''.join(map(str, source_url))
-    #print(source_url)
     source_id_and_url = (source_id, source_url)
     print(source_id_and_url)
     return source_id_and_url

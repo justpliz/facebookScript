@@ -15,7 +15,8 @@ from Db_connect import close_connect
 start_time = time.time()
 # This example requires Selenium WebDriver 3.13 or newer
 create_resource_table() # создание таблицы resource
-count = sorted_table()
+sorted_source_id = sorted_table()
+print(sorted_source_id)
 
 def group_parse(number_of_subscribers):
     subscribers = number_of_subscribers.replace('Участники: ', '')
@@ -65,12 +66,10 @@ def parse_facebook(source_url):
 
         useful_content = (full_name, number_of_subscribers, user_id)
         return useful_content
-        # if source_url.find("/group") != -1:
-        #     number_of_subscribers = group_parse(number_of_subscribers)
 
-x = 1
-for i in range(0, count):
-    source_id_and_url = get_content_from_db(x)
+x = 0
+for i in range(0, len(sorted_source_id)):
+    source_id_and_url = get_content_from_db(sorted_source_id[x])
     useful_content = parse_facebook(source_id_and_url[1])
     number_of_subscribers = useful_content[1]
     full_name = useful_content[0]
@@ -80,7 +79,6 @@ for i in range(0, count):
     update_content = (source_url, number_of_subscribers, full_name, user_id, source_id)
     update_resource(update_content)
     x += 1
-
 
 insert_content = ('https://www.facebook.com/brigittelindholm.me', '1', 'Абай Молдабеков2', '', 'Facebook')
 #insert_resource(insert_content)

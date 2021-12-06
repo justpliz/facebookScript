@@ -1,6 +1,4 @@
 import mysql.connector
-from mysql.connector import Error
-
 
 CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
 connection = mysql.connector.connect(**CONNECTION)
@@ -76,7 +74,6 @@ def get_content_from_db(count):
     source_url = cursor.fetchall()[count - 1]
     source_url = ''.join(map(str, source_url))
     source_id_and_url = (source_id, source_url)
-    print(source_id_and_url)
     return source_id_and_url
 
 def close_connect():

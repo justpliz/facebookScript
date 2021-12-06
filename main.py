@@ -69,13 +69,14 @@ def parse_facebook(source_url):
         #     number_of_subscribers = group_parse(number_of_subscribers)
 
 x = 1
-for i in range(1, count):
-    source_url = get_content_from_db(x)
-    useful_content = parse_facebook(source_url[1])
+for i in range(0, count):
+    source_id_and_url = get_content_from_db(x)
+    useful_content = parse_facebook(source_id_and_url[1])
     number_of_subscribers = useful_content[1]
     full_name = useful_content[0]
     user_id = useful_content[2]
-    source_id = useful_content[0]
+    source_id = source_id_and_url[0]
+    source_url = source_id_and_url[1]
     update_content = (source_url, number_of_subscribers, full_name, user_id, source_id)
     update_resource(update_content)
     x += 1

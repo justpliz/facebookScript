@@ -77,13 +77,15 @@ def update_resource(update_content):
 def get_content_from_db(count):
     cursor.execute("SELECT source_id FROM resource")
     source_id = cursor.fetchall()[count - 1]
-    print(source_id)
+    source_id = ''.join(map(str, source_id))
+    #print(source_id)
     cursor.execute("SELECT source_url FROM resource")
     source_url = cursor.fetchall()[count - 1]
     source_url = ''.join(map(str, source_url))
-    print(source_url)
-    resource = (source_id, source_url)
-    return resource
+    #print(source_url)
+    source_id_and_url = (source_id, source_url)
+    print(source_id_and_url)
+    return source_id_and_url
 
 def close_connect():
     cursor.close()

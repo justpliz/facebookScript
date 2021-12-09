@@ -1,6 +1,7 @@
+#!/usr/bin/python
 import mysql.connector
 
-CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
+CONNECTION = {'host': 'localhost', 'database': 'facebook_script', 'user': 'Abay', 'password': 'MYSQL'}
 connection = mysql.connector.connect(**CONNECTION)
 cursor = connection.cursor()
 

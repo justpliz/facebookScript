@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import mysql.connector
 
 CONNECTION = {'host': 'localhost', 'database': 'facebook_script', 'user': 'Abay', 'password': 'MYSQL'}

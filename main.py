@@ -19,14 +19,14 @@ sorted_source_id = sorted_table()
 
 # обработка количества участников группы
 def group_parse(number_of_subscribers):
-    subscribers = number_of_subscribers.replace('Участники: ', '')
-    number_of_subscribers = subscribers.replace('Участники: ', '')
+    number_of_subscribers = number_of_subscribers.replace('Участники: ', '')
+    number_of_subscribers = number_of_subscribers.replace('K members', '')
     if number_of_subscribers.find("тыс.") != -1:
         number_of_subscribers = number_of_subscribers.replace('\xa0тыс.', '')
         number_of_subscribers = number_of_subscribers.replace(',', '.')
         number_of_subscribers = float(number_of_subscribers)
         number_of_subscribers *= 1000
-    elif number_of_subscribers.find(" млн") != -1:
+    elif number_of_subscribers.find("млн") != -1:
         number_of_subscribers = number_of_subscribers.replace('\xa0млн', '')
         number_of_subscribers = number_of_subscribers.replace(',', '.')
         number_of_subscribers = float(number_of_subscribers)
@@ -42,8 +42,11 @@ def parse_facebook(source_url):
     dict(DesiredCapabilities.CHROME)
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     options.add_argument('window-size=1920x935')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(executable_path=r'/root/facebook_script/chromedriver', options=options)
+    # driver = webdriver.Chrome(options=options)
     WebDriverWait(driver, 10)
     driver.get(source_url)
     content = []
@@ -52,10 +55,12 @@ def parse_facebook(source_url):
     for sub in sub_result:
         content.append(sub.get_attribute("textContent"))
     full_name = content[13]
+    print(full_name)
     number_of_subscribers = content[20]
 
     if source_url.find("id=") != -1:
         user_id = source_url.split("id=", 1)[1]
+        number_of_subscribers = content[18]
     elif source_url.find("groups") != -1:
         user_id = source_url.partition('groups/')[-1].rpartition('/')[0]
         number_of_subscribers = group_parse(number_of_subscribers)

@@ -50,7 +50,7 @@ def parse_facebook(source_url):
     WebDriverWait(driver, 10)
     driver.get(source_url)
     content = []
-    time.sleep(1)
+    time.sleep(10)
     sub_result = driver.find_elements(By.CLASS_NAME, "d2edcug0")
     for sub in sub_result:
         content.append(sub.get_attribute("textContent"))

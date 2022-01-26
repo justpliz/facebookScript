@@ -1,7 +1,7 @@
 import mysql.connector
 
-CONNECTION = {'host': 'localhost', 'database': 'facebook_script', 'user': 'Abay', 'password': 'MYSQL'}
-# CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
+# CONNECTION = {'host': 'localhost', 'database': 'facebook_script', 'user': 'Abay', 'password': 'MYSQL'}
+CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
 connection = mysql.connector.connect(**CONNECTION)
 cursor = connection.cursor()
 
@@ -22,9 +22,35 @@ def create_resource_table():
     except mysql.connector.Error as error:
         print("Failed to create table in MySQL: {}".format(error))
 
-def sorted_table():
+def sorted_table_FB():
     try:
         mySql_sorted_table = "SELECT source_id FROM resource WHERE type = 'Facebook' ORDER BY update_date"
+        cursor.execute(mySql_sorted_table)
+        sorted_source_id = cursor.fetchall()
+        sorted_source_id = list(sum(sorted_source_id, ()))
+        connection.commit()
+
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+
+    return sorted_source_id
+
+def sorted_table_VK():
+    try:
+        mySql_sorted_table = "SELECT source_id FROM resource WHERE type = 'VK' ORDER BY update_date"
+        cursor.execute(mySql_sorted_table)
+        sorted_source_id = cursor.fetchall()
+        sorted_source_id = list(sum(sorted_source_id, ()))
+        connection.commit()
+
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+
+    return sorted_source_id
+
+def sorted_table_TWI():
+    try:
+        mySql_sorted_table = "SELECT source_id FROM resource WHERE type = 'Twitter' ORDER BY update_date"
         cursor.execute(mySql_sorted_table)
         sorted_source_id = cursor.fetchall()
         sorted_source_id = list(sum(sorted_source_id, ()))

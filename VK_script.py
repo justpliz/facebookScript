@@ -1,3 +1,4 @@
+#!/root/facebook_script/venv/bin/python3
 import time
 import requests
 

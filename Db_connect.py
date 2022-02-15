@@ -1,7 +1,8 @@
 #!/root/facebook_script/venv/bin/python3
 import mysql.connector
 
-# CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'Abay', 'password': 'MYSQL'}
+# CONNECTION = {'host': 'localhost', 'database': 'facebook_script', 'user': 'Abay', 'password': 'MYSQL'}
+# CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
 CONNECTION = {'host': 'localhost', 'database': 'facebookScript', 'user': 'root', 'password': 'MYSQL'}
 connection = mysql.connector.connect(**CONNECTION)
 cursor = connection.cursor()
@@ -101,8 +102,11 @@ def get_content_from_db(count):
     cursor.execute("SELECT source_url FROM resource")
     source_url = cursor.fetchall()[count - 1]
     source_url = ''.join(map(str, source_url))
-    source_id_and_url = (source_id, source_url)
-    return source_id_and_url
+    cursor.execute("SELECT user_id FROM resource")
+    user_id = cursor.fetchall()[count - 1]
+    user_id = ''.join(map(str, user_id))
+    content_from_db = (source_id, source_url, user_id)
+    return content_from_db
 
 def close_connect():
     cursor.close()

@@ -40,12 +40,13 @@ def group_parse(number_of_subscribers):
 # парсинг страницы Facebook
 def parse_facebook(source_url):
     # This example requires Selenium WebDriver 3.13 or newer
-    dict(DesiredCapabilities.CHROME)
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('window-size=1920x935')
+    options.headless = True
+    # options.add_argument('--headless')
+    # options.add_argument('--disable-dev-shm-usage')
+    # options.add_argument('window-size=1920x935')
     # driver = webdriver.Chrome(executable_path=r'/root/facebook_script/chromedriver', options=options)
     driver = webdriver.Chrome(options=options)
     WebDriverWait(driver, 10)
@@ -75,13 +76,13 @@ def parse_facebook(source_url):
 
 x = 0
 for i in range(0, len(sorted_source_id)):
-    source_id_and_url = get_content_from_db(sorted_source_id[x])
-    useful_content = parse_facebook(source_id_and_url[1])
+    content_from_db = get_content_from_db(sorted_source_id[x])
+    useful_content = parse_facebook(content_from_db[1])
     number_of_subscribers = useful_content[0]
     full_name = useful_content[1]
     user_id = useful_content[2]
-    source_id = source_id_and_url[0]
-    source_url = source_id_and_url[1]
+    source_id = content_from_db[0]
+    source_url = content_from_db[1]
     # обновление полей таблицы resource
     update_content = (source_url, number_of_subscribers, full_name, user_id, source_id)
     update_resource(update_content)

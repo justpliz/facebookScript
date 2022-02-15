@@ -11,13 +11,13 @@ from Db_connect import update_resource
 start_time = time.time()
 # создание таблицы resource
 create_resource_table()
-# сортировка таблицы по дате и типу(Facebook)
+# сортировка таблицы по дате и типу(VK)
 sorted_source_id = sorted_table_VK()
-#access token генерируемый VK API
+# access token генерируемый VK API
 token = "f5a848cc54bfd25e74c035280769ec7ee457670b7ddaeabfb4f2c3b8ad08116d5c40b58702f13cf3de81f"
 
-# # парсинг страницы Facebook
-def parse_facebook(source_url):
+# Отправка запросов VK
+def vk_api(source_url):
     URL = source_url.rpartition('/')[2]
     search_type = f"https://api.vk.com/method/utils.resolveScreenName?screen_name={URL}&access_token={token}&v=5.131"
     search_type_req = requests.get(search_type).json()
@@ -48,13 +48,13 @@ def parse_facebook(source_url):
 
 x = 0
 for i in range(0, len(sorted_source_id)):
-    source_id_and_url = get_content_from_db(sorted_source_id[x])
-    usefull_content = parse_facebook(source_id_and_url[1])
+    content_from_db = get_content_from_db(sorted_source_id[x])
+    usefull_content = vk_api(content_from_db[1])
     number_of_subscribers = usefull_content[0]
     full_name = usefull_content[1]
     user_id = usefull_content[2]
-    source_id = source_id_and_url[0]
-    source_url = source_id_and_url[1]
+    source_id = content_from_db[0]
+    source_url = content_from_db[1]
     # обновление полей таблицы resource
     update_content = (source_url, number_of_subscribers, full_name, user_id, source_id)
     update_resource(update_content)

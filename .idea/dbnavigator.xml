@@ -24,11 +24,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33">
-        <schema name="facebookscript" object-types="table, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33">
@@ -66,12 +62,15 @@
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
+  <component name="DBNavigator.Project.ParserDiagnosticsManager">
+    <diagnostics-history />
+  </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
     <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" active="true">
+      <connection id="c7aa9f5d-a84d-4a51-ace2-f24168af2e33" active="true" signed="true">
         <database>
           <name value="facebookScript" />
           <description value="" />
@@ -155,7 +154,7 @@
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="423dc40f-6c98-4411-989d-e49a5b4f9e7a" active="true">
+      <connection id="423dc40f-6c98-4411-989d-e49a5b4f9e7a" active="true" signed="true">
         <database>
           <name value="facebook_script" />
           <description value="" />
